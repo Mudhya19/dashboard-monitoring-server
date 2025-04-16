@@ -1,10 +1,11 @@
 # Monitoring Menggunakan Prometheus dan Grafana
 
-Dokumentasi langkah-langkah instalasi dan konfigurasi **Prometheus**, **Node Exporter**, dan **Grafana** untuk kebutuhan monitoring sistem.
+Dokumentasi langkah-langkah instalasi dan konfigurasi **Prometheus**, **Node Exporter**, dan **Grafana** untuk kebutuhan monitoring sistem/server.
 
 ---
 
 ## Daftar Isi
+
 1. [Instalasi Prometheus dan Node Exporter](#1-instalasi-prometheus-dan-node-exporter)
 2. [Konfigurasi User dan Direktori Prometheus](#2-konfigurasi-user-dan-direktori-prometheus)
 3. [Konfigurasi Service Prometheus](#3-konfigurasi-service-prometheus)
@@ -67,7 +68,7 @@ sudo mv consoles/ console_libraries/ prometheus.yml /etc/prometheus/
 # my global config
 global:
   scrape_interval: 15s
-  evaluation_interval: 15s  
+  evaluation_interval: 15s
 
 scrape_configs:
   - job_name: "prometheus"
@@ -146,7 +147,7 @@ Edit kembali file `/etc/prometheus/prometheus.yml`:
 # my global config
 global:
   scrape_interval: 15s
-  evaluation_interval: 15s  
+  evaluation_interval: 15s
 
 scrape_configs:
   - job_name: "prometheus"
@@ -199,5 +200,58 @@ sudo lsof -n -P -i | grep grafana
 ---
 
 ### Referensi
+
 - [Dokumentasi Prometheus](https://prometheus.io/docs/)
 - [Dokumentasi Grafana](https://grafana.com/docs/)
+
+## 8 Akses Dashboard Monitoring
+
+Setelah semua proses instalasi dan konfigurasi selesai mengikuti langkah-langkah dalam README ini, Anda dapat mengakses layanan monitoring melalui browser dengan alamat berikut:
+
+- **Grafana Dashboard** – visualisasi metrik sistem/server secara real-time:  
+  👉 http://localhost:3000  
+  (default username: `admin`, password: `admin` atau yang sudah Anda atur)
+
+- **Prometheus Web UI** – menampilkan metrik, query (PromQL), dan status endpoint yang sedang dimonitor:  
+  👉 http://localhost:9090
+
+---
+
+### 🧩 Setup Dashboard Grafana Sesuai Kebutuhan
+
+Setelah berhasil login ke Grafana, Anda bisa melakukan setup dashboard untuk menampilkan metrik sesuai kebutuhan Anda:
+
+1. **Menambahkan Data Source**:
+   - Buka menu “⚙️ Configuration” → “Data Sources”.
+   - Pilih **Prometheus**.
+   - Masukkan URL Prometheus, misalnya `http://localhost:9090`, lalu klik **Save & Test**.
+
+2. **Mengimpor Dashboard Siap Pakai**:
+   - Buka menu “+ Create” → “Import”.
+   - Masukkan **ID Dashboard dari Grafana.com**, contohnya:
+     - **1860** untuk Node Exporter Full (dashboard sistem lengkap)
+     - **11074** untuk Linux Server Dashboard
+   - Pilih data source Prometheus, lalu klik **Import**.
+
+3. **Membuat Dashboard Kustom Sendiri**:
+   - Buka menu “+ Create” → “Dashboard”.
+   - Tambahkan panel dan buat query PromQL sesuai kebutuhan, misalnya:
+     - `node_cpu_seconds_total` untuk CPU
+     - `node_memory_MemAvailable_bytes` untuk memori
+     - `node_filesystem_size_bytes` untuk disk
+     - `node_network_receive_bytes_total` untuk jaringan
+
+4. **Mengatur Alert (Opsional)**:
+   - Anda dapat membuat alert di Grafana berdasarkan metrik tertentu, misalnya saat CPU usage > 90% selama 5 menit.
+   - Alert dapat dikirim ke Telegram, Email, Slack, dll jika alerting sudah diaktifkan dan dikonfigurasi.
+
+---
+
+### 🛡️ Pastikan Port Terbuka
+
+Pastikan port default Prometheus (`9090`) dan Grafana (`3000`) tidak diblokir oleh firewall. Untuk sistem berbasis `ufw`:
+
+```bash
+sudo ufw allow 9090/tcp
+sudo ufw allow 3000/tcp
+```
