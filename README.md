@@ -161,7 +161,9 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9100"]
 ```
+```bash
 sudo systemctl restart prometheus
+```
 ---
 
 ## 6. Menjalankan dan Mengecek Status Service
