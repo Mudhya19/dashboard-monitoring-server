@@ -62,7 +62,7 @@ sudo mv consoles/ console_libraries/ prometheus.yml /etc/prometheus/
 
 ## 3. Konfigurasi Service Prometheus
 
-### Edit konfigurasi `/etc/prometheus/prometheus.yml`
+### arahkan kedalam direktori /etc/Prometheus lalu membuka Edit konfigurasi `/etc/prometheus/prometheus.yml`
 
 ```yaml
 # my global config
