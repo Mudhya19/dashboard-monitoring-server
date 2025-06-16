@@ -111,6 +111,9 @@ WantedBy=multi-user.target
 
 # Pindahkan ke direktori bin
 sudo mv node_exporter /usr/local/bin/
+
+#lokasi file binary node_exporter
+which node_exporter
 ```
 
 ### Tambahkan service systemd:
