@@ -144,7 +144,8 @@ WantedBy=multi-user.target
 
 ## 5. Integrasi Node Exporter dengan Prometheus
 
-Edit kembali file `/etc/prometheus/prometheus.yml`:
+konfigurasi prometheus.yml dari node-exporter
+sudo nano /etc/prometheus/prometheus.yml Edit kembali file `/etc/prometheus/prometheus.yml`:
 
 ```yaml
 # my global config
